@@ -1,23 +1,12 @@
 from django.shortcuts import render, HttpResponse
-from django_redis import get_redis_connection
+
+from django.views.decorators.cache import cache_page
 
 
-# Create your views here.
-# import redis
-# from utils.redis_poll import POOL
-
-
+@cache_page(60 * 15)    #有他  全局缓存无效
 def index(request):
-    # conn = redis.Redis(connection_pool=POOL)
-    conn = get_redis_connection('default')
-
-    conn.hset('kkk', 'age',6666)
     return HttpResponse('设置ok')
 
 
 def order(request):
-    # conn = redis.Redis(connection_pool=POOL)
-    conn = get_redis_connection('default')
-
-    conn.hget('kkk','age')
     return HttpResponse('获取ok')
